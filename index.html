@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>steamgames.fun - Steam 游戏攻略集合站</title>
+  <meta name="description" content="steamgames.fun 是 Steam 游戏中文攻略集合站，提供开荒路线、资源速查、系统解析、合作玩法和版本更新记录。">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5905906520714538" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #071113;
+      --ink: #f0f8f8;
+      --muted: #a8babb;
+      --line: rgba(221, 246, 246, 0.17);
+      --panel: rgba(12, 24, 27, 0.88);
+      --panel-2: rgba(20, 36, 41, 0.9);
+      --aqua: #48d8c8;
+      --gold: #f1c85a;
+      --coral: #ff765e;
+      --green: #74c66b;
+      --blue: #7bb6ff;
+      --radius: 8px;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.32);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(7, 17, 19, 0.2), var(--bg) 610px),
+        url("https://cdn.akamai.steamstatic.com/steam/apps/1962700/library_hero.jpg") top center / cover no-repeat fixed,
+        var(--bg);
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      min-height: 68px;
+      padding: 0 28px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7, 17, 19, 0.86);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 220px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 850;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(72, 216, 200, 0.45);
+      border-radius: 50%;
+      color: var(--aqua);
+      background: rgba(72, 216, 200, 0.1);
+    }
+
+    .search {
+      position: relative;
+      flex: 1;
+      max-width: 500px;
+    }
+
+    .search input {
+      width: 100%;
+      height: 40px;
+      padding: 0 42px 0 42px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: var(--ink);
+      outline: none;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .search svg {
+      position: absolute;
+      left: 14px;
+      top: 11px;
+      color: var(--muted);
+    }
+
+    .nav {
+      display: flex;
+      gap: 6px;
+      margin-left: auto;
+    }
+
+    .nav a {
+      padding: 10px 11px;
+      border-radius: 7px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .nav a:hover {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .wrap {
+      width: min(1220px, calc(100% - 44px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: 540px;
+      display: grid;
+      align-items: end;
+      padding: 76px 0 34px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 28px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 11px;
+      border: 1px solid rgba(72, 216, 200, 0.44);
+      border-radius: 999px;
+      color: #c9fff7;
+      background: rgba(7, 17, 19, 0.58);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    h1 {
+      max-width: 850px;
+      margin: 18px 0 0;
+      font-size: clamp(44px, 7vw, 88px);
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 20px 0 0;
+      color: #d9eeee;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border: 1px solid rgba(240, 248, 248, 0.2);
+      border-radius: 7px;
+      color: var(--ink);
+      text-decoration: none;
+      background: rgba(7, 17, 19, 0.66);
+      font-weight: 760;
+    }
+
+    .btn.primary {
+      color: #051212;
+      border-color: var(--aqua);
+      background: var(--aqua);
+    }
+
+    .btn.gold {
+      color: #211802;
+      border-color: var(--gold);
+      background: var(--gold);
+    }
+
+    .hero-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-panel img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .hero-panel-body {
+      padding: 18px;
+    }
+
+    .hero-panel h2 {
+      margin: 8px 0 8px;
+      font-size: 22px;
+    }
+
+    .hero-panel p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .status {
+      display: inline-flex;
+      width: fit-content;
+      min-height: 26px;
+      align-items: center;
+      padding: 0 8px;
+      border-radius: 999px;
+      color: #051212;
+      background: var(--green);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .status.wait {
+      color: #231902;
+      background: var(--gold);
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .stat {
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(7, 17, 19, 0.62);
+      backdrop-filter: blur(10px);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .section {
+      margin-bottom: 26px;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(12, 24, 27, 0.91);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      scroll-margin-top: 88px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 22px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: 29px;
+    }
+
+    .section-head p {
+      max-width: 560px;
+      margin: 0;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.65;
+    }
+
+    .feature-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+      gap: 16px;
+    }
+
+    .feature-card,
+    .mini-card,
+    .guide-card,
+    .update-row,
+    .category-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel-2);
+      overflow: hidden;
+    }
+
+    .feature-card {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.95fr) minmax(0, 1.05fr);
+    }
+
+    .feature-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 310px;
+      object-fit: cover;
+    }
+
+    .feature-body {
+      padding: 22px;
+    }
+
+    .feature-body h3,
+    .mini-card h3,
+    .guide-card h3,
+    .category-card h3 {
+      margin: 10px 0 10px;
+      font-size: 24px;
+    }
+
+    .feature-body p,
+    .mini-card p,
+    .guide-card p,
+    .category-card p,
+    .update-row p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.66;
+      font-size: 14px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 9px;
+      border: 1px solid rgba(240, 248, 248, 0.18);
+      border-radius: 999px;
+      color: #ecffff;
+      background: rgba(7, 17, 19, 0.42);
+      font-size: 12px;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .mini-stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .mini-card {
+      padding: 18px;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 10px;
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mini-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .mini-list strong {
+      color: var(--ink);
+      text-align: right;
+    }
+
+    .category-grid,
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .category-card,
+    .guide-card {
+      padding: 18px;
+      min-height: 172px;
+    }
+
+    .category-icon {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 7px;
+      color: #051212;
+      font-weight: 900;
+    }
+
+    .category-icon.aqua {
+      background: var(--aqua);
+    }
+
+    .category-icon.gold {
+      background: var(--gold);
+    }
+
+    .category-icon.coral {
+      background: var(--coral);
+    }
+
+    .category-icon.blue {
+      background: var(--blue);
+    }
+
+    .category-icon.green {
+      background: var(--green);
+    }
+
+    .category-icon.plain {
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .guide-card {
+      display: grid;
+      align-content: space-between;
+      gap: 16px;
+    }
+
+    .guide-card img {
+      width: 100%;
+      aspect-ratio: 16 / 8;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .guide-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .updates {
+      display: grid;
+      gap: 10px;
+    }
+
+    .update-row {
+      display: grid;
+      grid-template-columns: 130px 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 14px 16px;
+    }
+
+    .update-row time {
+      color: #d8eeee;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .update-row strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .footer {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      padding: 12px 0 42px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer a {
+      color: #cffff8;
+      text-decoration: none;
+    }
+
+    @media (max-width: 1020px) {
+      .hero-grid,
+      .feature-layout,
+      .feature-card {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-row,
+      .category-grid,
+      .guide-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar {
+        flex-wrap: wrap;
+        padding: 12px 16px;
+      }
+
+      .brand {
+        min-width: 0;
+      }
+
+      .search {
+        order: 3;
+        flex-basis: 100%;
+        max-width: none;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .wrap {
+        width: min(100% - 28px, 680px);
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 52px 0 24px;
+      }
+
+      h1 {
+        font-size: 41px;
+      }
+
+      .section {
+        padding: 20px;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .section-head p {
+        margin-top: 8px;
+        text-align: left;
+      }
+
+      .stats-row,
+      .category-grid,
+      .guide-grid,
+      .update-row,
+      .footer {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="steamgames.fun 首页">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M4 12.4c2.4-5.7 5.1-8.6 8-8.6s5.6 2.9 8 8.6c-2.4 5.2-5.1 7.8-8 7.8s-5.6-2.6-8-7.8Z" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M8.7 13.2c2.2.8 4.4.8 6.6 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span>steamgames.fun</span>
+    </a>
+
+    <label class="search" aria-label="站内搜索">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+        <path d="m16.2 16.2 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <input type="search" placeholder="搜索攻略：Subnautica、开荒、合作、基地">
+    </label>
+
+    <nav class="nav" aria-label="主站导航">
+      <a href="#featured">主推</a>
+      <a href="#categories">分类</a>
+      <a href="#guides">攻略库</a>
+      <a href="#updates">更新</a>
+      <a href="subnautica-2.html">Subnautica 2</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Steam 游戏攻略集合站</span>
+          <h1>steamgames.fun</h1>
+          <p>把 Steam 商店信息、玩家开荒路线、资源速查和版本变化整理成一个中文攻略库。首页负责发现和导航，单个游戏页面负责完整玩法攻略。</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="subnautica-2.html">阅读 Subnautica 2 攻略</a>
+            <a class="btn" href="#guides">浏览攻略库</a>
+            <a class="btn" href="#updates">查看更新</a>
+          </div>
+          <div class="stats-row" aria-label="站点数据">
+            <div class="stat"><strong>1</strong><span>已上线攻略</span></div>
+            <div class="stat"><strong>6</strong><span>主站栏目</span></div>
+            <div class="stat"><strong>Steam</strong><span>资料基准来源</span></div>
+            <div class="stat"><strong>EA</strong><span>抢先体验跟踪</span></div>
+          </div>
+        </div>
+
+        <aside class="hero-panel" aria-label="今日主推">
+          <img src="https://cdn.akamai.steamstatic.com/steam/apps/1962700/header.jpg" alt="Subnautica 2 Steam 图片">
+          <div class="hero-panel-body">
+            <span class="status">今日主推</span>
+            <h2>Subnautica 2：异星水域</h2>
+            <p>开放世界生存制作、水下探索、单人和在线合作。当前攻略已补充玩法推进、装备优先级、合作分工和基地建设。</p>
+            <div class="hero-actions">
+              <a class="btn gold" href="subnautica-2.html">进入攻略页</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section wrap" id="featured">
+      <div class="section-head">
+        <h2>主推攻略</h2>
+        <p>主站首页需要像一个攻略门户：先告诉玩家今天该看什么，再把不同类型的内容分门别类地送到眼前。</p>
+      </div>
+
+      <div class="feature-layout">
+        <article class="feature-card">
+          <img src="https://cdn.akamai.steamstatic.com/steam/apps/1962700/library_600x900.jpg" alt="Subnautica 2 封面">
+          <div class="feature-body">
+            <span class="status">已上线</span>
+            <h3>Subnautica 2：异星水域完整开荒页</h3>
+            <p>独立页面包含 Steam 信息、开局 90 分钟路线、玩法推进原则、装备建造优先级、合作探索分工、基地规划、系统需求和后续生态记录位。</p>
+            <div class="tags">
+              <span class="tag">抢先体验</span>
+              <span class="tag">开放世界</span>
+              <span class="tag">生存制作</span>
+              <span class="tag">合作探索</span>
+            </div>
+            <div class="hero-actions">
+              <a class="btn primary" href="subnautica-2.html">打开攻略</a>
+              <a class="btn" href="https://store.steampowered.com/app/1962700/_2/" target="_blank" rel="noreferrer">Steam 商店</a>
+            </div>
+          </div>
+        </article>
+
+        <div class="mini-stack">
+          <aside class="mini-card">
+            <span class="status wait">站点定位</span>
+            <h3>不是游戏页面，是攻略集合站</h3>
+            <p>首页保留全站导航、攻略库、分类、更新记录和预留内容；每款游戏再进入自己的详情页。</p>
+          </aside>
+          <aside class="mini-card">
+            <span class="status wait">内容标准</span>
+            <ul class="mini-list">
+              <li><span>游戏资料</span><strong>Steam 优先</strong></li>
+              <li><span>攻略内容</span><strong>玩法可执行</strong></li>
+              <li><span>抢先体验</span><strong>标注日期</strong></li>
+              <li><span>后续扩展</span><strong>卡片预留</strong></li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="categories">
+      <div class="section-head">
+        <h2>攻略分类</h2>
+        <p>玩家来到主站时，不一定知道要找哪款游戏，所以首页需要按玩法和需求组织内容。</p>
+      </div>
+
+      <div class="category-grid">
+        <article class="category-card">
+          <div class="category-icon aqua">生</div>
+          <h3>生存制作</h3>
+          <p>基地、资源、工具、食水、电力、载具和远征补给。</p>
+          <div class="tags"><a class="tag" href="subnautica-2.html">Subnautica 2</a></div>
+        </article>
+        <article class="category-card">
+          <div class="category-icon gold">开</div>
+          <h3>新手开荒</h3>
+          <p>前 30 分钟、前 90 分钟、第一基地和第一轮科技树。</p>
+          <div class="tags"><a class="tag" href="subnautica-2.html#start">开局路线</a></div>
+        </article>
+        <article class="category-card">
+          <div class="category-icon coral">合</div>
+          <h3>多人合作</h3>
+          <p>分工、信标命名、仓库规则、远征集合点和资料同步。</p>
+          <div class="tags"><a class="tag" href="subnautica-2.html#coop">合作攻略</a></div>
+        </article>
+        <article class="category-card">
+          <div class="category-icon blue">图</div>
+          <h3>地图探索</h3>
+          <p>生态区、危险边界、深区入口、资源点和基地候选点。</p>
+          <div class="tags"><a class="tag" href="subnautica-2.html#biomes">生态记录</a></div>
+        </article>
+        <article class="category-card">
+          <div class="category-icon green">表</div>
+          <h3>速查表</h3>
+          <p>系统需求、装备优先级、资源用途和版本改动。</p>
+          <div class="tags"><a class="tag" href="subnautica-2.html#equipment">装备表</a></div>
+        </article>
+        <article class="category-card">
+          <div class="category-icon plain">待</div>
+          <h3>即将收录</h3>
+          <p>后续可加入更多 Steam 热门游戏，首页结构已经预留。</p>
+          <div class="tags"><span class="tag">Subnautica</span><span class="tag">Below Zero</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section wrap" id="guides">
+      <div class="section-head">
+        <h2>攻略库</h2>
+        <p>已上线的卡片进入独立页面；预留卡片会在后续填充真实内容，保持主站规模感。</p>
+      </div>
+
+      <div class="guide-grid">
+        <article class="guide-card">
+          <div>
+            <img src="https://cdn.akamai.steamstatic.com/steam/apps/1962700/header.jpg" alt="Subnautica 2">
+            <span class="status">已上线</span>
+            <h3>Subnautica 2：异星水域</h3>
+            <p>玩法推进、装备优先级、基地建设、合作探索与 Steam 信息。</p>
+          </div>
+          <div>
+            <div class="guide-meta">
+              <span class="tag">生存制作</span>
+              <span class="tag">水下探索</span>
+              <span class="tag">EA</span>
+            </div>
+            <div class="hero-actions"><a class="btn primary" href="subnautica-2.html">阅读</a></div>
+          </div>
+        </article>
+
+        <article class="guide-card">
+          <div>
+            <span class="status wait">预留</span>
+            <h3>Subnautica</h3>
+            <p>可扩展：剧情流程、独眼巨人号、海虾号、失落之河、熔岩区。</p>
+          </div>
+          <div class="guide-meta"><span class="tag">经典生存</span><span class="tag">待上线</span></div>
+        </article>
+
+        <article class="guide-card">
+          <div>
+            <span class="status wait">预留</span>
+            <h3>Subnautica: Below Zero</h3>
+            <p>可扩展：冰原路线、陆地探索、关键蓝图、载具升级。</p>
+          </div>
+          <div class="guide-meta"><span class="tag">冰原探索</span><span class="tag">待上线</span></div>
+        </article>
+
+        <article class="guide-card">
+          <div>
+            <span class="status wait">预留</span>
+            <h3>Steam 新游观察</h3>
+            <p>用于收录抢先体验新游、版本变化和首周开荒建议。</p>
+          </div>
+          <div class="guide-meta"><span class="tag">新游</span><span class="tag">版本追踪</span></div>
+        </article>
+
+        <article class="guide-card">
+          <div>
+            <span class="status wait">预留</span>
+            <h3>合作游戏专题</h3>
+            <p>整理多人分工、服务器设置、任务推进和队伍沟通规则。</p>
+          </div>
+          <div class="guide-meta"><span class="tag">多人</span><span class="tag">专题</span></div>
+        </article>
+
+        <article class="guide-card">
+          <div>
+            <span class="status wait">预留</span>
+            <h3>玩家投稿入口</h3>
+            <p>后续可加入投稿规则、截图标准、版本号和路线验证要求。</p>
+          </div>
+          <div class="guide-meta"><span class="tag">社区</span><span class="tag">待开放</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section wrap" id="updates">
+      <div class="section-head">
+        <h2>最新更新</h2>
+        <p>攻略集合站需要让用户知道内容有没有维护，尤其是抢先体验游戏。</p>
+      </div>
+
+      <div class="updates">
+        <article class="update-row">
+          <time datetime="2026-05-17">2026-05-17</time>
+          <div>
+            <strong>主站首页重做</strong>
+            <p>新增品牌首页、主推攻略、攻略分类、攻略库、更新记录和站点结构。</p>
+          </div>
+          <a class="tag" href="#featured">首页</a>
+        </article>
+        <article class="update-row">
+          <time datetime="2026-05-17">2026-05-17</time>
+          <div>
+            <strong>Subnautica 2 玩法攻略扩充</strong>
+            <p>补充玩法推进原则、氧气规则、背包规则、装备建造优先级和合作分工。</p>
+          </div>
+          <a class="tag" href="subnautica-2.html#gameplay">详情页</a>
+        </article>
+        <article class="update-row">
+          <time datetime="2026-05-14">2026-05-14</time>
+          <div>
+            <strong>Steam 信息基准</strong>
+            <p>记录 Subnautica 2 抢先体验发售状态、功能标签、开发发行和系统需求。</p>
+          </div>
+          <a class="tag" href="https://store.steampowered.com/app/1962700/_2/" target="_blank" rel="noreferrer">Steam</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer wrap">
+    <div>steamgames.fun · Steam 游戏中文攻略集合站 · 当前主推 Subnautica 2：异星水域</div>
+    <div><a href="subnautica-2.html">Subnautica 2 攻略</a></div>
+  </footer>
+</body>
+</html>
