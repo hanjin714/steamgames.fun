@@ -5,15 +5,131 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Deep Rock Galactic: Rogue Core Co-op Guide - steamgames.fun</title>
   <meta name="description" content="Deep Rock Galactic: Rogue Core guide covering co-op roles, roguelite run structure, cave safety, resource priorities, and first-week tactics.">
-  <link rel="stylesheet" href="assets/guide-page.css">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://steamgames.fun/deep-rock-galactic-rogue-core.html">
   <style>
-    .hero { --hero-image: url("https://cdn.akamai.steamstatic.com/steam/apps/2605790/library_hero.jpg"); }
+    :root {
+      --bg: #0a0f0c;
+      --panel: #121a14;
+      --panel-2: #18211c;
+      --ink: #eef5ef;
+      --muted: #a0ada2;
+      --line: rgba(200,230,210,0.16);
+      --accent: #74c66b;
+      --accent2: #ff765e;
+      --gold: #f1c85a;
+      --radius: 8px;
+      --shadow: 0 18px 50px rgba(0,0,0,0.32);
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0; color:var(--ink);
+      background: var(--bg);
+      font-family: Inter,"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+    }
+    a { color:inherit; }
+    .topbar {
+      position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:18px;
+      min-height:66px; padding:0 28px; border-bottom:1px solid var(--line);
+      background:rgba(10,15,12,0.88); backdrop-filter:blur(16px);
+    }
+    .brand { display:flex; align-items:center; gap:12px; min-width:220px; color:var(--ink); text-decoration:none; font-weight:850; }
+    .brand-mark {
+      display:grid; place-items:center; width:38px; height:38px;
+      border:1px solid rgba(116,198,107,0.45); border-radius:50%;
+      color:var(--accent); background:rgba(116,198,107,0.1);
+    }
+    .nav { display:flex; gap:6px; margin-left:auto; }
+    .nav a { padding:10px 11px; border-radius:7px; color:var(--muted); text-decoration:none; font-size:14px; }
+    .nav a:hover { color:var(--ink); background:rgba(255,255,255,0.08); }
+    .wrap { width:min(1180px,calc(100% - 44px)); margin:0 auto; }
+    .hero {
+      min-height:460px; display:grid; align-items:end; padding:72px 0 34px;
+      background: linear-gradient(180deg,rgba(10,15,12,0.15),var(--bg)),
+                  url("https://cdn.akamai.steamstatic.com/steam/apps/2605790/library_hero.jpg") center/cover no-repeat;
+    }
+    .eyebrow {
+      display:inline-flex; align-items:center; min-height:32px; padding:0 11px;
+      border:1px solid rgba(116,198,107,0.44); border-radius:999px; color:#d4f4d6;
+      background:rgba(10,15,12,0.58); font-size:13px; font-weight:800;
+    }
+    h1 { max-width:880px; margin:18px 0 0; font-size:clamp(40px,6vw,76px); line-height:0.98; }
+    .hero p { max-width:760px; margin:18px 0 0; color:#d0e0d2; font-size:18px; line-height:1.75; }
+    .tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+    .tag {
+      display:inline-flex; align-items:center; min-height:28px; padding:0 9px;
+      border:1px solid rgba(230,248,235,0.18); border-radius:999px; color:#e8f5e9;
+      background:rgba(10,15,12,0.42); font-size:12px; white-space:nowrap; text-decoration:none;
+    }
+    .shell { display:grid; grid-template-columns:minmax(0,1fr) 310px; gap:22px; padding:28px 0 54px; }
+    .section,.rail-card,.guide-card { border:1px solid var(--line); border-radius:var(--radius); background:var(--panel); box-shadow:var(--shadow); backdrop-filter:blur(12px); }
+    .content { display:grid; gap:20px; }
+    .section { padding:26px; scroll-margin-top:86px; }
+    .section h2 { margin:0 0 16px; font-size:28px; }
+    .section h3 { margin:0 0 8px; font-size:19px; }
+    .section p,.section li { color:var(--muted); line-height:1.74; }
+    .grid-2,.grid-3 { display:grid; gap:14px; }
+    .grid-2 { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .grid-3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .guide-card { padding:18px; background:var(--panel-2); box-shadow:none; }
+    .steps { counter-reset:step; display:grid; gap:12px; margin:0; padding:0; list-style:none; }
+    .steps li {
+      counter-increment:step; display:grid; grid-template-columns:38px 1fr; gap:14px;
+      padding:14px; border:1px solid var(--line); border-radius:7px; background:rgba(255,255,255,0.045);
+    }
+    .steps li::before {
+      content:counter(step); display:grid; place-items:center; width:34px; height:34px;
+      border-radius:50%; color:#0a0f0c; background:var(--accent); font-weight:850;
+    }
+    .steps strong { display:block; margin-bottom:5px; color:var(--ink); }
+    .tool-table { width:100%; border-collapse:collapse; border-radius:7px; overflow:hidden; font-size:14px; }
+    .tool-table th,.tool-table td { padding:13px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    .tool-table th { color:#d4f4d6; background:rgba(116,198,107,0.1); }
+    .tool-table td { color:var(--muted); }
+    .note {
+      border-left:3px solid var(--accent2); padding:12px 14px; border-radius:0 7px 7px 0;
+      background:rgba(255,118,94,0.1); color:#ffd0c8;
+    }
+    .right-rail { display:grid; align-content:start; gap:16px; }
+    .rail-card { padding:18px; }
+    .rail-card h2 { margin:0 0 12px; font-size:15px; color:var(--muted); text-transform:uppercase; }
+    .stats { display:grid; gap:10px; margin:0; padding:0; list-style:none; }
+    .stats li { display:flex; justify-content:space-between; gap:12px; padding-bottom:10px; border-bottom:1px solid var(--line); color:var(--muted); font-size:14px; }
+    .stats strong { color:var(--ink); text-align:right; }
+    .source-list { display:grid; gap:9px; margin:0; padding-left:18px; }
+    .source-list a { color:#c0ecc4; }
+    .footer { display:flex; justify-content:space-between; gap:18px; padding:16px 0 44px; color:var(--muted); font-size:13px; }
+    .footer a { color:#c0ecc4; text-decoration:none; }
+    @media (max-width:960px) {
+      .shell,.grid-2,.grid-3 { grid-template-columns:1fr; }
+      .right-rail { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+    @media (max-width:720px) {
+      .topbar { padding:12px 16px; }
+      .nav { display:none; }
+      .wrap { width:min(100% - 28px,680px); }
+      .hero { min-height:420px; padding-top:52px; }
+      .section { padding:20px; }
+      .right-rail,.footer { grid-template-columns:1fr; display:grid; }
+      .tool-table { display:block; overflow-x:auto; }
+    }
   </style>
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">S</span><span>steamgames.fun</span></a>
-    <nav class="nav" aria-label="Guide navigation"><a href="index.html">Home</a><a href="#loop">Run Loop</a><a href="#roles">Roles</a><a href="#priority">Priorities</a><a href="#sources">Sources</a></nav>
+    <a class="brand" href="index.html" aria-label="steamgames.fun home">
+      <span class="brand-mark" aria-hidden="true">S</span>
+      <span>steamgames.fun</span>
+    </a>
+    <nav class="nav" aria-label="Guide navigation">
+      <a href="index.html">Home</a>
+      <a href="#loop">Run Loop</a>
+      <a href="#roles">Roles</a>
+      <a href="#priority">Priorities</a>
+      <a href="#team">Team Rules</a>
+      <a href="#sources">Sources</a>
+    </nav>
   </header>
 
   <section class="hero">
@@ -21,7 +137,11 @@
       <span class="eyebrow">Co-op FPS / Roguelite / Early Access</span>
       <h1>Deep Rock Galactic: Rogue Core Guide</h1>
       <p>Rogue Core is a 1-4 player co-op FPS roguelite about elite dwarven Reclaimers entering dangerous procedural caves. This guide helps teams survive early runs by focusing on roles, pacing, extraction discipline, and upgrade choices.</p>
-      <div class="tags"><span class="tag">Release: May 20, 2026</span><span class="tag">Developer: Ghost Ship Games</span><span class="tag">Early Access</span></div>
+      <div class="tags">
+        <span class="tag">Release: May 20, 2026</span>
+        <span class="tag">Developer: Ghost Ship Games</span>
+        <span class="tag">Early Access</span>
+      </div>
     </div>
   </section>
 
@@ -40,10 +160,10 @@
       <article class="section" id="roles">
         <h2>Co-op Role Split</h2>
         <div class="grid-2">
-          <div class="guide-card"><h3>Point dwarf</h3><p>Leads movement, calls tunnel direction, and stops at room entrances. The point role should not trigger objectives until the team is in position.</p></div>
-          <div class="guide-card"><h3>Light and terrain watcher</h3><p>Tracks visibility, escape routes, ceiling threats, pits, and traversal options. Good lighting prevents most avoidable downs.</p></div>
-          <div class="guide-card"><h3>Damage anchor</h3><p>Holds the strongest sightline during waves. The anchor should avoid chasing enemies into side tunnels unless the team agrees.</p></div>
-          <div class="guide-card"><h3>Resource caller</h3><p>Tracks ammo, health, upgrade currency, and objective materials. A single caller keeps the team from over-mining or leaving valuable resources behind.</p></div>
+          <div class="guide-card"><h3>Point dwarf</h3><p>Leads movement, calls tunnel direction, and stops at room entrances. The point role should not trigger objectives until the team is in position and confirms readiness.</p></div>
+          <div class="guide-card"><h3>Light and terrain watcher</h3><p>Tracks visibility, escape routes, ceiling threats, pits, and traversal options. Good lighting prevents most avoidable downs. Call out every vertical hazard before the team crosses a new chamber.</p></div>
+          <div class="guide-card"><h3>Damage anchor</h3><p>Holds the strongest sightline during waves. The anchor should avoid chasing enemies into side tunnels unless the team agrees. Staying in a defensible position keeps revive routes short.</p></div>
+          <div class="guide-card"><h3>Resource caller</h3><p>Tracks ammo, health, upgrade currency, and objective materials. A single caller keeps the team from over-mining or leaving valuable resources behind. Call resource states between every chamber transition.</p></div>
         </div>
       </article>
 
@@ -55,15 +175,16 @@
             <tr><td>S</td><td>Survivability and revive safety</td><td>Early roguelite progression depends on keeping runs alive long enough to learn cave patterns.</td></tr>
             <tr><td>A</td><td>Ammo economy</td><td>Long rooms and wave chains punish teams that solve every problem with panic fire.</td></tr>
             <tr><td>A</td><td>Mobility and repositioning</td><td>Procedural layouts create vertical danger; movement tools turn bad rooms into manageable fights.</td></tr>
-            <tr><td>B</td><td>Pure damage spikes</td><td>Damage matters, but early teams often fail from isolation, darkness, and resource waste before damage checks.</td></tr>
+            <tr><td>B</td><td>Pure damage spikes</td><td>Damage matters, but early teams often fail from isolation, darkness, and resource waste before damage checks become the primary problem.</td></tr>
           </tbody>
         </table>
       </article>
 
-      <article class="section">
+      <article class="section" id="team">
         <h2>Team Rules That Prevent Wipes</h2>
         <p>Do not start events while someone is mining a side path. Do not chase a lone enemy into darkness. Do not revive in the middle of an uncleared swarm unless another player is actively covering. Before moving to the next chamber, call ammo and health status out loud; silence is how teams discover too late that one player is out of resources.</p>
-        <p class="note">Because Rogue Core is Early Access, exact balance and upgrade values may change. This page focuses on durable co-op habits rather than fragile numbers.</p>
+        <p>The most common wipe pattern in the first week: a team clears three rooms comfortably, gets confident, skips the regroup call before room four, and loses two players to a vertical hazard while the other two are splitting attention between mining and a wave. The fix is not better aim — it is a five-second status check before every door.</p>
+        <p class="note">Because Rogue Core is Early Access, exact balance and upgrade values may change. This page focuses on durable co-op habits rather than fragile numbers that could be rebalanced in the next patch.</p>
       </article>
 
       <article class="section" id="sources">
@@ -77,7 +198,7 @@
 
     <aside class="right-rail">
       <section class="rail-card"><h2>Game Info</h2><ul class="stats"><li><span>Release</span><strong>May 20, 2026</strong></li><li><span>Players</span><strong>1-4 co-op</strong></li><li><span>Genres</span><strong>Action / Early Access</strong></li><li><span>Developer</span><strong>Ghost Ship Games</strong></li></ul></section>
-      <section class="rail-card"><h2>Read Next</h2><ul class="source-list"><li><a href="subnautica-2.html">Subnautica 2 guide</a></li><li><a href="forza-horizon-6.html">Forza Horizon 6 guide</a></li><li><a href="index.html#guides">All guides</a></li></ul></section>
+      <section class="rail-card"><h2>Read Next</h2><ul class="source-list"><li><a href="subnautica-2.html">Subnautica 2 guide</a></li><li><a href="forza-horizon-6.html">Forza Horizon 6 guide</a></li><li><a href="slay-the-spire-2.html">Slay the Spire 2 guide</a></li><li><a href="index.html#guides">All guides</a></li></ul></section>
     </aside>
   </main>
 
